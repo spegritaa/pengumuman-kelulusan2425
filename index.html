@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pengumuman Kelulusan</title>
+<style>
+  body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #e0f2f1;
+    display: flex;
+    flex-direction: column;
+  }
+  .header {
+    background-color: #008080; /* hijau toska */
+    color: white;
+    line-height: 20px;
+    padding: 1rem;
+    border-radius: 0 0 1rem 1rem;
+    text-align: center;
+  }
+  .header img {
+    height: 100px;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Countdown Keren */
+  .countdown {
+    max-width: 420px;
+    margin: 2rem auto 0;
+    padding: 2rem;
+    background: linear-gradient(135deg, #008080, #004d4d);
+    border-radius: 1rem;
+    box-shadow: 0 8px 20px rgba(0, 77, 77, 0.5);
+    text-align: center;
+    color: #e0f7f7;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-around;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    user-select: none;
+  }
+  .countdown div {
+    flex: 1;
+    margin: 0 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 0.75rem;
+    padding: 1rem 0;
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.2);
+    cursor: default;
+    perspective: 600px;
+    position: relative;
+  }
+  .countdown div span {
+    display: block;
+    font-size: 3rem;
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    color: #00e5ff;
+    text-shadow: 0 0 5px #00bfa5;
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease;
+    position: relative;
+    backface-visibility: hidden;
+  }
+  .countdown div:nth-child(1) span { color: #00e5ff; }
+  .countdown div:nth-child(2) span { color: #00ffc8; }
+  .countdown div:nth-child(3) span { color: #00ffb7; }
+  .countdown div:nth-child(4) span { color: #00ffa1; }
+  .countdown div br {
+    color: #a0eaea;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+  }
+  .flip {
+    animation: flipAnim 0.6s forwards;
+  }
+  @keyframes flipAnim {
+    0% {
+      transform: rotateX(0deg);
+    }
+    50% {
+      transform: rotateX(90deg);
+    }
+    100% {
+      transform: rotateX(0deg);
+    }
+  }
+
+  /* Main content & form */
+  .main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+  }
+  #login-form {
+    width: 100%;
+    max-width: 420px;
+    background: white;
+    border-radius: 1rem;
+    padding: 3rem;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+  label {
+    display: block;
+    margin: 1rem 0 0.3rem;
+    font-weight: bold;
+    text-align: left;
+  }
+  input {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #aaa;
+    border-radius: 0.3rem;
+    box-sizing: border-box;
+  }
+  button {
+    margin-top: 1.2rem;
+    padding: 0.7rem;
+    width: 100%;
+    font-size: 1.1rem;
+    background-color: #008080;
+    color: white;
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  button:disabled {
+    background-color: #008080;
+    cursor: not-allowed;
+  }
+  button:hover:not(:disabled) {
+    background-color: #006666;
+  }
+  .error-msg {
+    color: red;
+    margin-top: 1rem;
+    font-weight: bold;
+    display: none;
+  }
+  #result {
+    max-width: 420px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+  #result p {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+  }
+  #result .status {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  #result .lulus {
+    color: green;
+  }
+  #result .tidak-lulus {
+    color: red;
+  }
+  #logout-btn {
+    background-color: #cc0000;
+    margin-top: 1rem;
+    padding: 0.7rem;
+    width: 100%;
+    font-size: 1.1rem;
+    color: white;
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+  }
+  #logout-btn:hover {
+    background-color: #990000;
+  }
+  footer {
+    background-color: #004d4d;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+    border-radius: 1rem 1rem 0 0;
+    font-size: 0.9rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <img src="logo (2).png" alt="">
+  <h1>Pengumuman Kelulusan</h1>
+  <h2>SMP PGRI Tawangharjo</h2>
+  <p>Tahun Ajaran 2024/2025</p>
+</div>
+
+<div class="countdown" id="countdown">
+  <div><span id="days">00</span><br>Hari</div>
+  <div><span id="hours">00</span><br>Jam</div>
+  <div><span id="minutes">00</span><br>Menit</div>
+  <div><span id="seconds">00</span><br>Detik</div>
+</div>
+
+<div class="main-content">
+  <form id="login-form" style="display:none;">
+    <label for="nis">NIS</label>
+    <input type="text" id="nis" autocomplete="off" required />
+    <label for="password">Password</label>
+    <input type="password" id="password" autocomplete="off" required />
+    <button type="submit" disabled>Login</button>
+    <div class="error-msg" id="error-msg"></div>
+  </form>
+</div>
+
+<div id="result" style="display:none;">
+  <p id="student-name"></p>
+  <p class="status" id="student-status"></p>
+  <p id="result-message"></p>
+  <button id="logout-btn">Logout</button>
+</div>
+
+<footer>
+  &copy; 2025 SMP PGRI Tawangharjo
+</footer>
+
+<script>
+  const users = {
+    "2404": { password: "SPEGRITA2425", name: "ARDIAN EKA SAPUTRA", lulus: true },
+    "5032": { password: "SPEGRITA2425", name: "ARISCHAUL JANNAH", lulus: true },
+    "2402": { password: "SPEGRITA2425", name: "DEGGA OMARA FIRIDIAN", lulus: true },
+    "2403": { password: "SPEGRITA2425", name: "FADIL ARDI PUTRA", lulus: true },
+    "5035": { password: "SPEGRITA2425", name: "M LAIL", lulus: true },
+    "5036": { password: "SPEGRITA2425", name: "MAYLANI DIAH ASOKAWATI", lulus: true },
+    "2401": { password: "SPEGRITA2425", name: "MUHAMMAD NAUFAL JULIANTO", lulus: true },
+    "5038": { password: "SPEGRITA2425", name: "MUSTAQIM", lulus: true },
+    "5043": { password: "SPEGRITA2425", name: "SALSABILA CAERA AULIA PUTRI", lulus: true },
+    "5053": { password: "SPEGRITA2425", name: "SAYIDUL ANAM", lulus: true }
+  };
+
+  const targetDate = new Date('2025-06-02T17:00:00').getTime();
+
+  const countdown = document.getElementById('countdown');
+  const daysEl = document.getElementById('days');
+  const hoursEl = document.getElementById('hours');
+  const minutesEl = document.getElementById('minutes');
+  const secondsEl = document.getElementById('seconds');
+
+  const loginForm = document.getElementById('login-form');
+  const nisInput = document.getElementById('nis');
+  const passwordInput = document.getElementById('password');
+  const loginBtn = loginForm.querySelector('button');
+  const errorMsg = document.getElementById('error-msg');
+
+  const resultDiv = document.getElementById('result');
+  const studentNameEl = document.getElementById('student-name');
+  const studentStatusEl = document.getElementById('student-status');
+  const resultMessageEl = document.getElementById('result-message');
+  const logoutBtn = document.getElementById('logout-btn');
+
+  function flipUpdate(element, newValue) {
+    if (element.textContent === newValue) return;
+    element.classList.add('flip');
+    setTimeout(() => {
+      element.textContent = newValue;
+    }, 300);
+    element.addEventListener('animationend', () => {
+      element.classList.remove('flip');
+    }, { once: true });
+  }
+
+  function updateCountdown() {
+    const now = Date.now();
+    const diff = targetDate - now;
+
+    if (diff <= 0) {
+      const loggedInNIS = sessionStorage.getItem('loggedInNIS');
+      if (loggedInNIS && users[loggedInNIS]) {
+        showResult(loggedInNIS);
+      } else {
+        countdown.style.display = 'none';
+        loginForm.style.display = 'block';
+        resultDiv.style.display = 'none';
+      }
+    } else {
+      countdown.style.display = 'flex';
+      loginForm.style.display = 'none';
+      resultDiv.style.display = 'none';
+
+      let d = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2,'0');
+      let h = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2,'0');
+      let m = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2,'0');
+      let s = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2,'0');
+
+      flipUpdate(daysEl, d);
+      flipUpdate(hoursEl, h);
+      flipUpdate(minutesEl, m);
+      flipUpdate(secondsEl, s);
+    }
+  }
+
+  loginForm.addEventListener('input', () => {
+    loginBtn.disabled = !(nisInput.value.trim() && passwordInput.value.trim());
+    errorMsg.style.display = 'none';
+  });
+
+  loginForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const nis = nisInput.value.trim();
+    const password = passwordInput.value;
+
+    if(users[nis] && users[nis].password === password) {
+      sessionStorage.setItem('loggedInNIS', nis);
+      showResult(nis);
+      errorMsg.style.display = 'none';
+    } else {
+      errorMsg.textContent = "NIS atau password salah!";
+      errorMsg.style.display = 'block';
+    }
+  });
+
+  function showResult(nis) {
+    const user = users[nis];
+    loginForm.style.display = 'none';
+    countdown.style.display = 'none';
+    resultDiv.style.display = 'block';
+    studentNameEl.textContent = `Selamat, ${user.name}!`;
+    if(user.lulus) {
+      studentStatusEl.textContent = "Anda dinyatakan LULUS";
+      studentStatusEl.className = "status lulus";
+      resultMessageEl.textContent = "Langkahmu baru saja dimulai. Jangan pernah berhenti belajar dan bermimpi";
+    } else {
+      studentStatusEl.textContent = "Anda dinyatakan TIDAK LULUS";
+      studentStatusEl.className = "status tidak-lulus";
+      resultMessageEl.textContent = "Jangan putus asa, masih banyak kesempatan ke depan.";
+    }
+  }
+
+  logoutBtn.addEventListener('click', () => {
+    sessionStorage.removeItem('loggedInNIS');
+    resultDiv.style.display = 'none';
+    loginForm.style.display = 'block';
+    nisInput.value = '';
+    passwordInput.value = '';
+    loginBtn.disabled = true;
+    errorMsg.style.display = 'none';
+  });
+
+  // Jalankan setiap detik
+  setInterval(updateCountdown, 1000);
+  updateCountdown();
+
+</script>
+
+</body>
+</html>
